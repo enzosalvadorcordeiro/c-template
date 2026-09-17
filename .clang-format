@@ -19,4 +19,4 @@ AlignAfterOpenBracket: Align
 BinPackParameters: false
 BinPackArguments: false
 AlwaysBreakAfterReturnType: None
-PenaltyReturnTypeOnItsO
+PenaltyReturnTypeOnItsOwnLine: 200
