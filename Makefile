@@ -39,9 +39,12 @@ DEPS := $(OBJS:.o=.d)
 
 LIB_OBJS := $(filter-out $(OBJ_DIR)/main.o,$(OBJS))
 TEST_SRCS := $(TEST_DIR)/runner.c $(wildcard $(TEST_DIR)/test_*.c)
+TEST_OBJS := $(patsubst $(TEST_DIR)/%.c,$(OBJ_DIR)/tests/%.o,$(TEST_SRCS))
+TEST_DEPS := $(TEST_OBJS:.o=.d)
 
 WARNINGS := -Wall -Wextra -Wpedantic -Wshadow -Wconversion \
-            -Wstrict-prototypes -Wmissing-prototypes -Wformat=2
+            -Wstrict-prototypes -Wmissing-prototypes -Wformat=2 \
+            -Wno-unused-command-line-argument
 ifeq ($(WERROR),1)
   WARNINGS += -Werror
 endif
@@ -68,8 +71,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | dirs
 	@mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-$(TEST_BIN): $(LIB_OBJS) $(TEST_SRCS) | dirs
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o $@ $(TEST_SRCS) $(LIB_OBJS) $(LDLIBS)
+$(OBJ_DIR)/tests/%.o: $(TEST_DIR)/%.c | dirs
+	@mkdir -p $(dir $@)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+$(TEST_BIN): $(LIB_OBJS) $(TEST_OBJS) | dirs
+	$(CC) $(LDFLAGS) -o $@ $(TEST_OBJS) $(LIB_OBJS) $(LDLIBS)
 
 run: $(APP)
 	./$(APP) $(DATA_DIR)/sample.txt
@@ -116,4 +123,4 @@ help:
 		'make CC=clang   compile with clang' \
 		'make WERROR=1   treat warnings as errors'
 
--include $(DEPS)
+-include $(DEPS) $(TEST_DEPS)
