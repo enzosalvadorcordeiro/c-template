@@ -7,6 +7,7 @@ char *str_trim(char *text)
 {
     char *start;
     char *end;
+    size_t keep;
 
     if (text == NULL)
     {
@@ -25,16 +26,18 @@ char *str_trim(char *text)
         return text;
     }
 
-    end = start + strlen(start) - 1;
-    while (end > start && isspace((unsigned char)*end))
+    end = start + strlen(start);
+    do
     {
         end--;
-    }
+    } while (end > start && isspace((unsigned char)*end));
+
     end[1] = '\0';
 
     if (start != text)
     {
-        memmove(text, start, (size_t)(end - start + 2));
+        keep = (size_t)(end - start) + 2U;
+        memmove(text, start, keep);
     }
 
     return text;
