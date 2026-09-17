@@ -1,0 +1,41 @@
+# Build artifacts
+/build/*
+/bin/*
+*.o
+*.obj
+*.d
+*.exe
+*.out
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.gcda
+*.gcno
+*.gcov
+compile_commands.json
+
+# Keep empty output dirs in git
+!/build/.gitkeep
+!/bin/.gitkeep
+
+# Tooling
+.cache/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDEs — keep shared workspace files
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json

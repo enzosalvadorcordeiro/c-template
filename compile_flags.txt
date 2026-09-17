@@ -1,0 +1,10 @@
+-Iinclude
+-Itests
+-std=c17
+-Wall
+-Wextra
+-Wpedantic
+-Wshadow
+-Wconversion
+-Wstrict-prototypes
+-Wmissing-prototypes
