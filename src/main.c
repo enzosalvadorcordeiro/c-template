@@ -55,21 +55,21 @@ int main(int argc, char **argv)
         if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0)
         {
             print_help(argv[0]);
-            return APP_OK;
+            return (int)APP_OK;
         }
         if (strcmp(argv[i], "--version") == 0)
         {
             printf("%s %s\n", APP_NAME, APP_VERSION);
-            return APP_OK;
+            return (int)APP_OK;
         }
         if (str_starts_with(argv[i], "-"))
         {
             fprintf(stderr, "%s: unknown option '%s'\n", APP_NAME, argv[i]);
             print_help(argv[0]);
-            return APP_ERR_USAGE;
+            return (int)APP_ERR_USAGE;
         }
         path = argv[i];
     }
 
-    return print_trimmed_file(path);
+    return (int)print_trimmed_file(path);
 }
